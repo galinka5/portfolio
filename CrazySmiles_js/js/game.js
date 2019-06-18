@@ -63,7 +63,7 @@ function updateGameField(){
 	update_handler({s1:sp, s2:so, result:res});
 }
 
-// On timer: decrimant time or miss step
+// On timer: decrease timer or miss step
 function onTimer(){
 	if  (turn == OPPONENT) return;
 	update_handler({time:timer});
@@ -73,7 +73,7 @@ function onTimer(){
     }
 }
 
-// If player miss step
+// If player misses step
 function missStep(){
 	update_handler({time:0});
 	onStepMade();
@@ -103,7 +103,7 @@ function drawGameField(){
 	}
 }
 
-// Draw cell depanding for its type
+// Draw cell depending for its type
 function drawCell(col, row, fill){
 	if (fill){
 		context.fillStyle = B_COLOR;
@@ -132,7 +132,7 @@ function initEmptyField(){
 	}
 }
 
-// Initialization of all sppots on the field
+// Initialization of all spots on the field
 function initDefaultPoints(){
 	var i,j;
 	for (i = 0; i<=POINT_DEM; i++){
@@ -196,7 +196,7 @@ function tryToMakeStep(col, row){
 	return false;
 }
 
-/** Spot can be move only to 8 neighbour cell or jump through one cell by diagonal, vertical or horizontal
+/** Spot can be move (clone) only to 8 neighbour cell or jump through one cell by diagonal, vertical or horizontal
  * |J| |J| |J|
  * | |M|M|M| | 
  * |J|M|O|M|J| 
@@ -247,7 +247,7 @@ function makeStepOppenent(){
     }
 }
 
-// Convert neighbours to id
+// Convert neighbours to specified id
 function checkNeighbours(col, row, id){
 	for (var i = 0; i<NEIGHBOURS.length; i++){
 		var ncol = col + NEIGHBOURS[i][0];
@@ -304,7 +304,7 @@ function calculateStepAI(){
 	return best_step;
 }
 
-// Coordinates are out of the field
+// If coordinates are out of the field
 function outOfRange(col, row){
 	return (col<0 || row<0 || col>=field_width || row >= field_height); 
 }
