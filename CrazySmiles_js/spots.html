@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Crazy Smiles</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<link href="css/style.css" rel="stylesheet">
+		<script src="js/game.js"></script>
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+		<script>
+			var dpt = window.devicePixelRatio;
+			var widthM = window.screen.width;
+			var widthH = window.screen.height;
+			if (widthM*dpt < 976) {
+				document.write('<meta name="viewport" content="width=600, user-scalable=yes">');
+			}
+            var _context;
+            var _canvas;
+            var _timer_lbl;
+            var _player_score;
+            var _opponent_score;
+
+			window.onload = function() {
+                _canvas = document.getElementById("game-field");
+                _timer_lbl = document.getElementById('timer_lbl');
+                _player_score = document.getElementById('player_score');
+                _opponent_score = document.getElementById('opponent_score');
+
+				_canvas.onclick = clickHandler; 
+                initGame(_canvas, 0, updateHandler);
+			}
+			
+			function updateHandler(e){
+				if (!isNaN(e.time)){
+					var t = e.time;
+                    _timer_lbl.innerHTML = '00:' + ((t < 10) ? ('0' + t) : t);
+				}
+				if (e.s1){
+					_player_score.innerHTML = e.s1;
+				}
+				if (e.s2){
+					_opponent_score.innerHTML = e.s2;
+				}
+                if (e.result) {
+                    var res = e.result;
+                    var message = (res == 0) ? "Nobody won and nobody lost." :
+                        ((res == 1) ? "Congratulation! You have won!" : "You have lost.");
+                    setTimeout(gameEnd, 500, message);
+				}
+            }
+
+            function gameEnd(message) {
+                alert(message);
+                //initGame(_canvas, 4, updateHandler);
+                window.location.reload();
+            }
+	</script>
+	</head>
+	<body>
+		<div class="game"> 
+			<label class="border_text_field p_score" id="player_score"></label>
+			<label class="border_text_field timer" id="timer_lbl"></label>
+			<label class="border_text_field o_score" id="opponent_score"></label>
+			<div>
+				<canvas class="game_field" id="game-field" width="640" height="640"></canvas>
+			</div>
+		</div>
+	</body>
+</html>
